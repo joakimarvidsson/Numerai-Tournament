@@ -1,6 +1,6 @@
 # Walk-Forward Feature Selection
 
-This folder contains the implementation of **Walk-Forward Feature Selection** for the **Numerai Tournament**. The method evaluates feature importance dynamically over eras using a walk-forward approach.
+This folder contains the implementation of **Walk-Forward Feature Selection** for the **Numerai Tournament**. The pipeline evaluates feature importance dynamically over time and selects stable, high-performing features for model training.
 
 ## 📂 Files
 - **`Feature_Selection_Pipeline.ipynb`** - Jupyter Notebook containing the walk-forward feature selection process.
@@ -30,16 +30,23 @@ jupyter notebook Feature_Selection_Pipeline.ipynb
 ```
 
 ## 📈 Methodology
-Walk-Forward Feature Selection ensures robust feature selection by:
-1. **Training models over rolling windows** of past eras.
-2. **Evaluating feature importance dynamically** to adapt to changing market conditions.
-3. **Selecting a stable subset of features** that perform well across time.
+The feature selection pipeline analyzes feature importance using multiple methods and then refines selections using **era-walk-forward analysis**:
 
-## 🔍 Why Use Walk-Forward Feature Selection?
-- Traditional feature selection methods often **overfit to historical data**.
-- This approach ensures that **only stable and predictive features** are chosen for live trading.
-- Helps **avoid lookahead bias** by testing features only on future data.
+1. **Cumulative Feature Importance** from **LightGBM** - Tracks the importance of each feature across different eras.
+2. **SHAP Values** - Estimates feature impact using SHAP (SHapley Additive exPlanations).
+3. **Mean Decrease Accuracy (MDA)** - Measures feature importance by randomly permuting feature values and observing model performance changes.
+
+### 🔍 Combining Feature Importance
+The selected features can be aggregated using:
+- **Union** (includes any feature selected by at least one method)
+- **Intersection** (includes only features consistently selected by all methods)
+
+Additionally, features are validated using an **era-walk-forward approach**, ensuring stability and predictive power over multiple time periods.
+
+## ❓ Why Use Walk-Forward Feature Selection?
+- Prevents **lookahead bias** by selecting features based on past performance while testing on future data.
+- Helps avoid **overfitting** by ensuring selected features generalize well across eras.
+- Uses **multiple feature importance methods** to create a robust selection.
 
 ## 📜 License
 MIT License
-
