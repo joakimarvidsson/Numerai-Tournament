@@ -32,7 +32,7 @@ jupyter notebook Feature_Selection_Pipeline.ipynb
 ## 📈 Methodology
 The feature selection pipeline analyzes feature importance using multiple methods and then refines selections using **era-walk-forward analysis**:
 
-1. **Cumulative Feature Importance** from **LightGBM** - Tracks the importance of each feature across different eras.
+1. **Cumulative Feature Importance** from **LightGBM** - Tracks the importance of each feature in the example LightGBM model.
 2. **SHAP Values** - Estimates feature impact using SHAP (SHapley Additive exPlanations).
 3. **Mean Decrease Accuracy (MDA)** - Measures feature importance by randomly permuting feature values and observing model performance changes.
 
